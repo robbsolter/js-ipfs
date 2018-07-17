@@ -154,19 +154,7 @@ exports.add = {
     query: Joi.object()
       .keys({
         'cid-version': Joi.number().integer().min(0).max(1),
-        // Temporary restriction on raw-leaves:
-        // When cid-version=1 then raw-leaves MUST be present and false.
-        //
-        // This is because raw-leaves is not yet implemented in js-ipfs,
-        // and go-ipfs changes the value of raw-leaves to true when
-        // cid-version > 0 unless explicitly set to false.
-        //
-        // This retains feature parity without having to implement raw-leaves.
-        'raw-leaves': Joi.boolean().when('cid-version', {
-          is: 1,
-          then: Joi.boolean().valid(false).required(),
-          otherwise: Joi.boolean().valid(false)
-        }),
+        'raw-leaves': Joi.boolean(),
         'only-hash': Joi.boolean(),
         pin: Joi.boolean().default(true),
         'wrap-with-directory': Joi.boolean()
